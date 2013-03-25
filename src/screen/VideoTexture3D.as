@@ -1,7 +1,6 @@
 package screen
 {
 	import flare.core.*;
-	import flare.system.*;
 	import flash.display.*;
 	import flash.events.*;
 	import flash.media.*;
@@ -11,21 +10,18 @@ package screen
 	{
 		private var _connection:NetConnection;
 		private var _url:String;
-		private var _init:Boolean;
-
 		public var stream:NetStream;
 		public var video:Video;
+		private var _forceClear:Boolean;
 
-		public function VideoTexture3D( url:String, width:int, height:int, transparent:Boolean = false )
+		public function VideoTexture3D( url:String, width:int, height:int, transparent:Boolean = false, forceClear:Boolean = false )
 		{
-			super( new BitmapData( width, height, transparent ), true );
+			super( new BitmapData( width, height, transparent, 0x0 ), true );
 
-			// disable the mip mapping to speed up the uploads.
 			super.mipMode = Texture3D.MIP_NONE;
-
-			// tells to the texture that doesn't need to load anything.
-			// we'll stream the screen by our own.
 			super.loaded = true;
+
+			_forceClear = forceClear;
 
 			video = new Video( width, height );
 			video.deblocking = 1;
@@ -47,20 +43,23 @@ package screen
 			{
 				case "NetConnection.Connect.Success":
 
+					var videoClient:Object = new Object();
+					videoClient.onMetaData = metaDataHandler;
+
 					stream = new NetStream( _connection );
+					stream.client = videoClient;
 					stream.addEventListener( AsyncErrorEvent.ASYNC_ERROR, function (e:*):void {});
 					stream.addEventListener( NetStatusEvent.NET_STATUS, netStatusHandler );
 					stream.checkPolicyFile = true;
 					stream.bufferTime = 10;
 					stream.play( _url );
-
 					video.attachNetStream( stream );
 
 					break;
 				case "NetStream.Play.Complete":
 				case "NetStream.Play.Stop":
 
-					stream.play();
+					stream.play(_url);
 
 					break;
 				case "NetStream.Play.StreamNotFound":
@@ -76,9 +75,17 @@ package screen
 		 */
 		private function updateVideoEvent(e:Event):void
 		{
-			bitmapData.draw( video );
+			if ( !scene ) return;
+			if ( _forceClear ) bitmapData.fillRect( bitmapData.rect, 0x0 );
+			bitmapData.draw( video, video.transform.matrix, video.transform.colorTransform );
+			uploadTexture();
+		}
 
-			upload( Device3D.scene );
+		private function metaDataHandler(infoObject:Object):void
+		{
+/*			video.width = infoObject.width;
+			video.height = infoObject.height;*/
+			_forceClear = infoObject.forceClear;
 		}
 	}
 }

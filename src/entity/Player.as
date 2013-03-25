@@ -3,6 +3,8 @@ package entity
 	import flare.basic.Scene3D;
 	import flare.collisions.CollisionInfo;
 	import flare.core.Camera3D;
+	import flare.core.Lines3D;
+	import flare.core.Surface3D;
 	import flare.system.Input3D;
 	import flare.utils.Pivot3DUtils;
 
@@ -15,6 +17,7 @@ package entity
 		private var friction:Vector3D = new Vector3D(0.6, 1, 0.6);
 		private var jump:Boolean = false;
 		private var oldPosition:Vector3D = new Vector3D();
+		private var dirIndicator:Lines3D;
 
 		public function Player(stage:VirtualCinema)
 		{
@@ -23,6 +26,10 @@ package entity
 			scene.addEventListener(Scene3D.UPDATE_EVENT, updateEvent);
 
 			oldPosition.copyFrom(getPosition());
+
+			dirIndicator = new Lines3D();
+			dirIndicator.lineStyle( 1, 0xFFFFFF );
+			scene.addChild(dirIndicator);
 		}
 
 		public function updateEvent(e:Event)
@@ -43,6 +50,8 @@ package entity
 			if ( Input3D.keyDown( Input3D.D ) ) translateX( playerVel );
 			if ( Input3D.keyDown( Input3D.S ) ) translateZ( -playerVel );
 			if ( Input3D.keyDown( Input3D.W ) ) translateZ( playerVel );
+			if ( Input3D.keyDown( Input3D.CONTROL ) ) translateY( -playerVel );
+			if ( Input3D.keyDown( Input3D.SPACE ) ) translateY( playerVel );
 
 			// if we are not jumping.....jump!
 			if ( !jump && Input3D.keyHit( Input3D.SPACE ) )
@@ -52,31 +61,6 @@ package entity
 				// but we are really increasing the speed.
 				translateY( 10 );
 				jump = true;
-			}
-/*			 // update the player position and apply some gravity.
-			 x += velocity.x;
-			 y += velocity.y - 0.75;
-			 z += velocity.z;*/
-
-			 // once, we move the player, test if it is colliding with something.
-			if ( collisions.slider() )
-			{
-				// if it collided with something, get the firt collision data.
-				var info:CollisionInfo = collisions.data[0];
-
-				// if the y/up axis of the normal is greater than the 'x' and 'z', so
-				// we problably collided with the floor. set the jump flag to false again.
-				if ( info.normal.y > 0.8 ) jump = false;
-			}
-
-			if ( collisions.slider() )
-			{
-				// if it collided with something, get the firt collision data.
-				var info:CollisionInfo = collisions.data[0];
-
-				// if the y/up axis of the normal is greater than the 'x' and 'z', so
-				// we problably collided with the floor. set the jump flag to false again.
-				if ( info.normal.y > 0.8 ) jump = false;
 			}
 
 			 // update the player velocity and apply some friction.

@@ -1,64 +1,53 @@
 package
 {
-	import flare.basic.Scene3D;
 	import flare.loaders.Flare3DLoader;
-
+	import flare.system.ILibraryExternalItem;
+	import flare.system.Library3D;
 	import flash.display.Loader;
-
 	import flash.events.Event;
 
 	public class AssetManager extends Loader
 	{
-		private var _assets:Vector.<Flare3DLoader> = new Vector.<Flare3DLoader>();
-		private var _loadProgress:Number = 0;
+		private var _library:Library3D;
+
+		[Embed(source = "/../assets/player.zf3d", mimeType = "application/octet-stream")] private var model0:Class;
+		[Embed(source = "/../assets/cinemaAisle.zf3d", mimeType = "application/octet-stream")] private var model1:Class;
+		[Embed(source = "/../assets/beano_env.zf3d", mimeType = "application/octet-stream")] private var model2:Class;
 
 		public function AssetManager()
 		{
-			_assets.push(new Flare3DLoader("./assets/player.zf3d"));
-			_assets.push(new Flare3DLoader("./assets/cinemaAisle.zf3d"));
-			_assets.push(new Flare3DLoader("./assets/beano_env.zf3d"));
+			_library = new Library3D(10, false);
+			libraryPushItem( new Flare3DLoader( new model0 ), "player" );
+			libraryPushItem( new Flare3DLoader( new model1 ), "cinema" );
+			libraryPushItem( new Flare3DLoader( new model2 ), "level" );
+
+			_library.addEventListener("progress", progressEvent);
+			_library.addEventListener("complete", completeEvent);
+
+			_library.load();
 		}
 
-		public function loadAssets():void
+		private function completeEvent(event:Event):void
 		{
-			for(var loader in assets)
-			{
-				assets[loader].load();
-				assets[loader].addEventListener(Scene3D.COMPLETE_EVENT, onAssetLoaded)
+			dispatchEvent(event);
+		}
+
+		private function progressEvent(event:Event):void
+		{
+			trace( "progress", _library.progress );
+		}
+
+		private function libraryPushItem( item:ILibraryExternalItem, name:String ):void
+		{
+			if ( !_library.getItem( name ) ) {
+				_library.push( item );
+				_library.addItem( name, item );
 			}
 		}
 
-		private function onAssetLoaded(event:Event):void
+		public function get library():Library3D
 		{
-			_loadProgress += 100 / _assets.length;
-			if(isLoaded())
-			{
-				for(var loader in assets)
-				{
-					assets[loader].removeEventListener(Scene3D.COMPLETE_EVENT, onAssetLoaded)
-				}
-				dispatchEvent(new Event(Event.COMPLETE));
-			}
+			return _library;
 		}
-
-		private function isLoaded():Boolean
-		{
-			for(var loader in assets)
-			{
-				if(!assets[loader].loaded) return false
-			}
-			return true;
-		}
-
-		public function get assets():Vector.<Flare3DLoader>
-		{
-			return _assets;
-		}
-
-		public function get loadProgress():Number
-		{
-			return _loadProgress;
-		}
-
 	}
 }

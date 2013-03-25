@@ -34,15 +34,13 @@ package
 			_scene = new Scene3D( this );
 
 			_assetManager = new AssetManager();
-			_assetManager.loadAssets();
-
-			_assetManager.addEventListener(Event.COMPLETE, onAssetsLoaded);
+			_assetManager.addEventListener("complete", onAssetsLoaded);
 		}
 
 		private function onAssetsLoaded(event:Event):void
 		{
 			_assetManager.removeEventListener(Event.COMPLETE, onAssetsLoaded);
-			_level = scene.addChild(_assetManager.assets[2]);
+			_level = scene.addChild(_assetManager.library.getItem("level") as Pivot3D);
 			_level.setScale(100, 100, 100);
 			_player = new Player(this);
 			_screen = scene.addChild(new Screen("http://10.0.1.195/virtualcinema/assets/DOG.flv"));
