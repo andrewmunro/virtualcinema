@@ -6,11 +6,10 @@ package entity
 	{
 		public var model:Pivot3D;
 
-		public function Entity(stage:VirtualCinema)
+		public function Entity()
 		{
 			super();
-			model = addChild((stage.assetManager.library.getItem("player") as Pivot3D).clone());
-			stage.scene.addChild(this);
+			model = addChild((VirtualCinema.assetManager.library.getItem("player") as Pivot3D).clone());
 		}
 	}
 }
