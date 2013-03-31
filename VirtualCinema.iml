@@ -8,7 +8,7 @@
             <entry library-id="545bb8fd-b893-46a7-b4aa-ffbe085ec934">
               <dependency linkage="Merged" />
             </entry>
-            <entry module-name="FlashSocket.IO" build-configuration-name="FlashSocket.IO">
+            <entry library-id="2b216d8e-04ae-4973-9224-338ff838c5fd">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -29,6 +29,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/libs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/vendor" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
     </content>
     <orderEntry type="jdk" jdkName="4.6.0" jdkType="Flex SDK Type (new)" />
@@ -45,7 +46,16 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="FlashSocket.IO" exported="" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="2b216d8e-04ae-4973-9224-338ff838c5fd" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/FlashSocket.IO-0.7.x-Beta_1.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

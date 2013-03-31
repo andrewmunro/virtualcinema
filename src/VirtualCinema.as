@@ -20,7 +20,7 @@ package
 	public class VirtualCinema extends Sprite
 	{
 		public static var scene:Scene3D;
-		private static var assetManager:AssetManager;
+		public static var assetManager:AssetManager;
 
 		private static var _level:Pivot3D;
 		private static var _player:Pivot3D;
