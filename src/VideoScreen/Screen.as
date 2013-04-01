@@ -1,12 +1,8 @@
 package videoScreen
 {
 	import flare.core.Pivot3D;
-	import flare.materials.Material3D;
 	import flare.materials.Shader3D;
 	import flare.materials.filters.TextureMapFilter;
-
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	import flash.events.Event;
 
 	public class Screen extends Pivot3D
@@ -32,11 +28,11 @@ package videoScreen
 
 		private function onVideoReady(event:Event):void
 		{
-/*			var texture:VideoTexture3D = new VideoTexture3D(_content.video, 512, 512 );
+			var texture:VideoTexture3D = new VideoTexture3D(_content.video, 512, 512 );
 			var shader:Shader3D = new Shader3D( "material", [new TextureMapFilter(texture)] );
 			shader.cullFace = "front";
 
-			VirtualCinema.scene.getChildByName("screen").setMaterial(shader);*/
+			VirtualCinema.scene.getChildByName("screen").setMaterial(shader);
 		}
 	}
 }

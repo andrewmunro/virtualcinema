@@ -11,16 +11,12 @@ package
 		private var _library:Library3D;
 
 		[Embed(source = "/../assets/player.zf3d", mimeType = "application/octet-stream")] private var model0:Class;
-		[Embed(source = "/../assets/cinemaAisle.zf3d", mimeType = "application/octet-stream")] private var model1:Class;
-		[Embed(source = "/../assets/beano_env.zf3d", mimeType = "application/octet-stream")] private var model2:Class;
 		[Embed(source = "/../assets/cinemaScreen.zf3d", mimeType = "application/octet-stream")] private var model3:Class;
 
 		public function AssetManager()
 		{
 			_library = new Library3D(10, false);
 			libraryPushItem( new Flare3DLoader( new model0 ), "player" );
-			libraryPushItem( new Flare3DLoader( new model1 ), "cinema" );
-			libraryPushItem( new Flare3DLoader( new model2 ), "level" );
 			libraryPushItem( new Flare3DLoader( new model3 ), "level2" );
 
 			_library.addEventListener("progress", progressEvent);
