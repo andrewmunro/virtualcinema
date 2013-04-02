@@ -37,7 +37,7 @@ package entity
 			oldPosition.copyFrom(getPosition());
 
 			var dir:Vector3D = Matrix3DUtils.getDir(world);
-			_rotation = oldRotation = Math.atan2( dir.x, dir.z ) * 180 / Math.PI;
+			_rotation = oldRotation = Math.atan2( dir.x, dir.z ) * 180 / Math.PI + 180;
 
 			collisions = new SphereCollision( this, 25 );
 			//collisions.addCollisionWith(VirtualCinema.scene.getChildByName("floor"));
@@ -81,7 +81,7 @@ package entity
 			 velocity.z = ( z - oldPosition.z ) * friction.z;
 
 			var dir:Vector3D = Matrix3DUtils.getDir(world);
-			_rotation = Math.atan2( dir.x, dir.z ) * 180 / Math.PI;
+			_rotation = Math.atan2( dir.x, dir.z ) * 180 / Math.PI + 180;
 
 			//If position or rotation has changed
 			if(Vector3DUtils.length(oldPosition, getPosition()) || oldRotation != rotation)

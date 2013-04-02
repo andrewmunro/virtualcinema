@@ -49,9 +49,8 @@ package network
 			var data:Object = event.data[0];
 			var player:Entity = Helpers.getEntityByID(data.id);
 			player.setPosition(data.x, data.y, data.z);
-			var oldRotation:Vector3D = player.getRotation(false);
-			trace(data.r);
-			player.setRotation(oldRotation.x, data.r, oldRotation.z);
+			player.setRotation(0,0,0);
+			player.rotateY(data.r);
 		}
 
 		private function onPlayerDisconnect(event:FlashSocketEvent):void
