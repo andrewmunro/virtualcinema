@@ -2,15 +2,8 @@ package network
 {
 	import com.pnwrain.flashsocket.FlashSocket;
 	import com.pnwrain.flashsocket.events.FlashSocketEvent;
-
 	import entity.Entity;
-
-	import flare.core.Pivot3D;
-
-	import flash.geom.Vector3D;
-
 	import flash.system.Security;
-
 	import utils.Helpers;
 
 	public class NetworkManager
@@ -19,10 +12,10 @@ package network
 
 		public function NetworkManager()
 		{
-			//Security.loadPolicyFile("xmlsocket://localhost:10843");
-			//socket = new FlashSocket("localhost:8000");
-			Security.loadPolicyFile("xmlsocket://176.56.235.72:10843");
-			socket = new FlashSocket("176.56.235.72:8000");
+			Security.loadPolicyFile("xmlsocket://localhost:10843");
+			socket = new FlashSocket("localhost:8000");
+			//Security.loadPolicyFile("xmlsocket://176.56.235.72:10843");
+			//socket = new FlashSocket("176.56.235.72:8000");
 			socket.addEventListener(FlashSocketEvent.CONNECT, onConnect);
 			socket.addEventListener(FlashSocketEvent.MESSAGE, onMessage);
 			socket.addEventListener(OPCODES.PLAYER_NEW, onPlayerNew);

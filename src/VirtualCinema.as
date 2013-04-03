@@ -5,18 +5,14 @@ package
 	import flare.basic.Scene3D;
 	import flare.core.Camera3D;
 	import flare.core.Pivot3D;
-	import flare.utils.Matrix3DUtils;
 	import flare.utils.Pivot3DUtils;
-
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-
 	import network.NetworkManager;
 	import network.OPCODES;
-
-	import videoScreen.Screen;
+	import videoscreen.Screen;
 
 	[SWF(frameRate = 60, width = 800, height = 450, backgroundColor = 0x000000)]
 
@@ -48,7 +44,7 @@ package
 
 			_level = scene.addChild(assetManager.library.getItem("level2") as Pivot3D);
 			scene.getChildByName("cinemaScreen.zf3d").setScale(3,3,3);
-			_screen = scene.addChild(new Screen("http://www.nomtrees.com/virtualcinema/assets/DOG.flv")); //"http://10.0.1.195/virtualcinema/assets/DOG.flv"
+			_screen = scene.addChild(new Screen("http://www.youtube.com/watch?v=MEB1CcO5Ks4")); //"http://www.nomtrees.com/virtualcinema/assets/DOG.flv"
 
 			scene.camera = new Camera3D("playerCam");
 			scene.camera.setPosition(0, 135, -130);
