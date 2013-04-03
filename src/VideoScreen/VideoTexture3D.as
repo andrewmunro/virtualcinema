@@ -1,4 +1,4 @@
-package videoScreen
+package videoscreen
 {
 	import flare.core.*;
 	import flash.display.*;
